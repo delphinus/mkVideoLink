@@ -39,6 +39,7 @@ for my $v (@videos) {
     my $cmd = sprintf 'cygstart cmd /c mklink "%s" "%s"',
         $symlink->as_foreign('Win32')->stringify,
         $v->as_foreign('Win32')->stringify;
+    say $cmd;
 
     $sum_size += $v->stat->size;
 }
