@@ -65,7 +65,8 @@ for my $v (@videos) {
         Path::Class::File->new_foreign(Win32 => `cygpath -w $bat`)->stringify;
 
     # バッチファイル削除
-    unlink $bat;
+    say $bat;
+    #unlink $bat;
 
     $created_size += $v->stat->size;
     $total_size += $v->stat->size;
