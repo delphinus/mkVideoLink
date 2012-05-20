@@ -77,6 +77,7 @@ say '';
 my $delete_size = 0;
 my @to_delete = grep { ! exists $_->{skipped} } values %existent;
 for my $v (@to_delete) {
+    -f $v->{file} or next;
     say 'delete ' . $v->{file}->basename;
     $delete_size += $v->{file}->stat->size;
     unlink $v->{file};
