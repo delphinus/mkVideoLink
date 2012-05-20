@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use 5.12.0;
 use warnings;
-use Date::Manip;
+use HTTP::Date qw!time2iso!;
 use Path::Class;
 
 my @videos = sort {
@@ -10,6 +10,5 @@ my @videos = sort {
 @videos = @videos[0 .. 19]; # 最新 20 個のリンクを作成する
 
 for my $v (@videos) {
-    say $v->basename . " => " .
-        UnixDate 'epoch ' . $v->stat->mtime => '%Y/%m/%d %H:%M:%S';
+    say $v->basename . " => " . time2iso($v->stat->mtime);
 }
