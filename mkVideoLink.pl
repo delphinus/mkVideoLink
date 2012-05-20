@@ -7,7 +7,7 @@ use Path::Class;
 #my @videos = sort {
 #$b->stat->mtime <=> $a->stat->mtime
 #} grep { /\.m4v$/ } dir('G:/BD/Videos')->children;
-my @videos = grep { /^test\.m4v$/ } dir('G:/BD/Videos')->children;
+my @videos = grep { /test\.m4v$/ } dir('G:/BD/Videos')->children;
 @videos = @videos[0 .. 19]; # 最新 20 個のリンクを作成する
 
 my $sum_size = 0;
