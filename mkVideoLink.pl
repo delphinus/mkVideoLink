@@ -6,6 +6,8 @@ use File::Temp qw!tempfile!;
 use HTTP::Date qw!time2iso!;
 use Path::Class;
 
+$|++;
+
 # m4v ファイルがあるフォルダ
 my $SRC_DIR = dir('G:/BD/Videos');
 # Dropbox のフォルダ
