@@ -4,9 +4,17 @@ use warnings;
 use HTTP::Date qw!time2iso!;
 use Path::Class;
 
-my $SRC_DIR = Path::Class::Dir->new_foreign(Win32 => 'G:/BD/Videos');
-my $DESC_DIR = Path::Class::Dir->new_foreign(Win32 =>
-    'C:/Users/delphinus/Dropbox/Videos');
+my $SRC_DIR = dir('G:/BD/Videos');
+my $DESC_DIR = dir('C:/Users/delphinus/Dropbox/Videos');
+
+$ENV{CYGWIN} = 'nodosfilewarning';
+
+# DESC_DIR にある symlink を全部消す
+while (my $f = $DESC_DIR->next) {
+    $f =~ /\.m4v$/ or next;
+    say 'delete ' . $f->basename;
+    unlink $f; 
+}
 
 my @videos = sort {
     $b->stat->mtime <=> $a->stat->mtime
@@ -19,8 +27,11 @@ for my $v (@videos) {
     $v->basename eq 'test.m4v' or next;
     say $v->basename . " => " . time2iso($v->stat->mtime);
     my $symlink = $DESC_DIR->file($v->basename);
-    my @args = (qw!cygstart cmd /c mklink!, $symlink->stringify, $v->stringify);
-    say join ' ', @args;
+    my @args = (
+        qw!cygstart cmd /c mklink!,
+        $symlink->as_foreign('Win32')->stringify,
+        $v->as_foreign('Win32')->stringify
+    );
     system @args;
     $sum_size += $v->stat->size;
 }
