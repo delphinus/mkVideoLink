@@ -5,7 +5,7 @@ use HTTP::Date qw!time2iso!;
 use Path::Class;
 
 my $SRC_DIR = dir('G:/BD/Videos');
-my $DESC_DIR = dir('C:/Dropbox/Videos');
+my $DESC_DIR = dir('C:/Users/delphinus/Dropbox/Videos');
 
 my @videos = sort {
     $b->stat->mtime <=> $a->stat->mtime
