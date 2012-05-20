@@ -47,8 +47,7 @@ for my $v (@videos) {
 
     $bat_fh->print(decode(utf8 => qq!mklink "$desc" "$src"!));
     $bat_fh->close;
-    say "cygstart $bat";
-    system 'cygstart', $bat;
+    system qw!cygstart cmd /c!, $bat;
 
     $sum_size += $v->stat->size;
 }
