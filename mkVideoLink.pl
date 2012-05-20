@@ -36,7 +36,7 @@ for my $v (@videos) {
     say $filename . "\n    => " . time2iso($v->stat->mtime);
     my $symlink = $DESC_DIR->file($filename);
 
-    system sprintf 'cygstart cmd /c mklink "%s" "%s"',
+    my $cmd = sprintf 'cygstart cmd /c mklink "%s" "%s"',
         $symlink->as_foreign('Win32')->stringify,
         $v->as_foreign('Win32')->stringify;
 
