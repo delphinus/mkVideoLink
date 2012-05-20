@@ -76,7 +76,7 @@ say '';
 # 古いシンボリックリンクを削除
 my $delete_size = 0;
 while (my ($k, $v) = each %existent) {
-    -f $v or next;
+    -e $v or next;
     say "delete $k";
     $delete_size += $v->stat->size;
     unlink $v;
