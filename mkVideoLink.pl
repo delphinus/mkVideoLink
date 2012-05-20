@@ -9,6 +9,11 @@ my @videos = sort {
 } grep { /\.m4v$/ } dir('G:/BD/Videos')->children;
 @videos = @videos[0 .. 19]; # 最新 20 個のリンクを作成する
 
+my $sum_size = 0;
 for my $v (@videos) {
     say $v->basename . " => " . time2iso($v->stat->mtime);
+    $sum_size += $v->stat->size;
 }
+
+say '';
+printf 'total : %d GB\n', $sum_size / 1024 / 1024 / 1024;
