@@ -40,8 +40,7 @@ for my $v (@videos) {
     my $src = encode(cp932 => decode(utf8 =>
             $v->as_foreign('Win32')->stringify));
 
-    my $cmd = qq!cygstart cmd /c mklink "$desc" "$src"!;
-    say $cmd;
+    system qq!cygstart cmd /c mklink "$desc" "$src"!;
 
     $sum_size += $v->stat->size;
 }
