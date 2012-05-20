@@ -37,9 +37,9 @@ for my $v (@videos) {
 
     say $filename . "\n    => " . time2iso($v->stat->mtime);
 
-    my ($bat, $bat_fh) = tempfile('mkVideoLink_XXXX', SUFFIX => '.bat');
-    $bat = Path::Class::File->new_foreign(Win32 => $bat);
+    my ($bat_fh, $bat) = tempfile('mkVideoLink_XXXX', SUFFIX => '.bat');
     binmode $bat_fh => ':encoding(cp932)';
+    $bat = Path::Class::File->new_foreign(Win32 => $bat);
 
     my $desc = $DESC_DIR->file($filename)->as_foreign('Win32')->stringify;
     my $src = $v->as_foreign('Win32')->stringify;
