@@ -18,7 +18,7 @@ for my $v (@videos) {
     $v->basename eq 'test.m4v' or next;
     say $v->basename . " => " . time2iso($v->stat->mtime);
     my $symlink = $DESC_DIR->file($v->basename);
-    my @args = (qw!cygstart cmd -c mklink!, $symlink->stringify, $v->stringify);
+    my @args = (qw!cygstart cmd /c mklink!, $symlink->stringify, $v->stringify);
     say join ' ', @args;
     system @args;
     $sum_size += $v->stat->size;
