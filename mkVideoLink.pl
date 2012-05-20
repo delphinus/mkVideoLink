@@ -10,7 +10,7 @@ my $DESC_DIR = Path::Class::Dir->new_foreign(Win32 =>
 
 my @videos = sort {
     $b->stat->mtime <=> $a->stat->mtime
-} grep { /\.m4v$/ } dir('G:/BD/Videos')->children;
+} grep { /\.m4v$/ } $SRC_DIR->children;
 @videos = @videos[0 .. 19]; # 最新 20 個のリンクを作成する
 
 my $sum_size = 0;
