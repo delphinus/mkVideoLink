@@ -35,12 +35,17 @@ for my $v (@videos) {
     }
 
     say $filename . "\n    => " . time2iso($v->stat->mtime);
-    my $desc = encode(cp932 => decode(utf8 =>
-            $DESC_DIR->file($filename)->as_foreign('Win32')->stringify));
-    my $src = encode(cp932 => decode(utf8 =>
-            $v->as_foreign('Win32')->stringify));
 
-    system qq!cygstart cmd /c mklink "$desc" "$src"!;
+    my ($bat, $bat_fh) = tempfile('mkVideoLink_XXXX', SUFFIX => '.bat');
+    $bat = Path::Class::File->new_foreign(Win32 => $bat);
+    binmode $bat_fh => ':encoding(cp932)';
+
+    my $desc = $DESC_DIR->file($filename)->as_foreign('Win32')->stringify;
+    my $src = $v->as_foreign('Win32')->stringify;
+
+    $bat_fh->print(decode(utf8 => qq!mklink "$desc" "$src"!));
+    $bat_fh->close;
+    system 'cygstart', $bat->stringify;
 
     $sum_size += $v->stat->size;
 }
