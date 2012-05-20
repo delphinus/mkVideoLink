@@ -36,12 +36,10 @@ for my $v (@videos) {
     say $filename . "\n    => " . time2iso($v->stat->mtime);
     my $symlink = $DESC_DIR->file($filename);
 
-    my @args = (
-        qw!cygstart cmd /c mklink!,
+    system sprintf 'cygstart cmd /c mklink "%s" "%s"',
         $symlink->as_foreign('Win32')->stringify,
-        $v->as_foreign('Win32')->stringify
-    );
-    system @args;
+        $v->as_foreign('Win32')->stringify;
+
     $sum_size += $v->stat->size;
 }
 
