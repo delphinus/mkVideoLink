@@ -2,6 +2,7 @@
 use 5.12.0;
 use warnings;
 use Encode;
+use File::Temp;
 use HTTP::Date qw!time2iso!;
 use Path::Class;
 
