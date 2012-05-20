@@ -24,8 +24,7 @@ my @videos = sort {
 my $sum_size = 0;
 for my $v (@videos) {
     ref $v or next;
-    $v->basename eq 'test.m4v' or next;
-    say $v->basename . " => " . time2iso($v->stat->mtime);
+    say $v->basename . "\n    => " . time2iso($v->stat->mtime);
     my $symlink = $DESC_DIR->file($v->basename);
     my @args = (
         qw!cygstart cmd /c mklink!,
