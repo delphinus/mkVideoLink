@@ -20,6 +20,7 @@ for my $v (@videos) {
     my $symlink = $DESC_DIR->file($v->basename);
     my @args = ('mklink', $symlink->stringify, $v->stringify);
     say join ' ', @args;
+    system @args;
     $sum_size += $v->stat->size;
 }
 
