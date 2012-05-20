@@ -40,14 +40,13 @@ for my $v (@videos) {
     my ($bat_fh, $bat) = tempfile('mkVideoLink_XXXX',
         SUFFIX => '.bat', TMPDIR => 1);
     binmode $bat_fh => ':encoding(cp932)';
-    $bat = Path::Class::File->new_foreign(Win32 => `cygpath -w $bat`);
 
     my $desc = $DESC_DIR->file($filename)->as_foreign('Win32')->stringify;
     my $src = $v->as_foreign('Win32')->stringify;
 
     $bat_fh->print(decode(utf8 => qq!mklink "$desc" "$src"!));
     $bat_fh->close;
-    system 'cygstart', $bat->stringify;
+    system "cygstart $bat";
 
     $sum_size += $v->stat->size;
 }
