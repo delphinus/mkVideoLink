@@ -100,7 +100,7 @@ mkVideoLink.pl
 
 =head1 DESCRIPTION
 
-作成した m4v ファイルを保存したディレクトリから最新 20 件をピックアップし、	
+作成した m4v ファイルを保存したディレクトリから最新 20 件をピックアップし、
 Dropbox のフォルダにシンボリックリンクを作る。
 
 C<mklink> コマンドを使うので Windows Vista 以降専用。
