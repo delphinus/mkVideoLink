@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use 5.12.0;
 use warnings;
+use Encode;
 use HTTP::Date qw!time2iso!;
 use Path::Class;
 
@@ -34,11 +35,12 @@ for my $v (@videos) {
     }
 
     say $filename . "\n    => " . time2iso($v->stat->mtime);
-    my $symlink = $DESC_DIR->file($filename);
+    my $desc = encode(cp932 => decode(utf8 =>
+            $DESC_DIR->file($filename)->as_foreign('Win32')->stringify));
+    my $src = encode(cp932 => decode(utf8 =>
+            $v->as_foreign('Win32')->stringify));
 
-    my $cmd = sprintf 'cygstart cmd /c mklink "%s" "%s"',
-        $symlink->as_foreign('Win32')->stringify,
-        $v->as_foreign('Win32')->stringify;
+    my $cmd = qq!cygstart cmd /c mklink "$desc" "$src"!;
     say $cmd;
 
     $sum_size += $v->stat->size;
