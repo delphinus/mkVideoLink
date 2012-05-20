@@ -20,7 +20,7 @@ $ENV{CYGWIN} = 'nodosfilewarning';
 my %existent;
 while (my $f = $DESC_DIR->next) {
     $f =~ /\.m4v$/ or next;
-    $existent{$f->basename} = +{file => $f};
+    $existent{$f->basename} = $f;
 }
 
 # 最新 20 個のリンクを作成する
@@ -39,8 +39,8 @@ for my $v (@videos) {
     # 既にシンボリックリンクが存在するなら次へ
     if ($existent{$filename}) {
         say "skip $filename";
-        $existent{$filename}{skipped} = 1;
-        $total_size += $existent{$filename}{file}->stat->size;
+        $total_size += $existent{$filename}->stat->size;
+        delete $existent{$filename};
         next;
     }
 
@@ -75,12 +75,11 @@ say '';
 
 # 古いシンボリックリンクを削除
 my $delete_size = 0;
-my @to_delete = grep { ! exists $_->{skipped} } values %existent;
-for my $v (@to_delete) {
-    -f $v->{file} or next;
-    say 'delete ' . $v->{file}->basename;
-    $delete_size += $v->{file}->stat->size;
-    unlink $v->{file};
+while (my ($k, $v) = each %existent) {
+    -f $v or next;
+    say "delete $k";
+    $delete_size += $v->stat->size;
+    unlink $v;
 }
 
 say '';
