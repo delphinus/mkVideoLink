@@ -16,4 +16,4 @@ for my $v (@videos) {
 }
 
 say '';
-printf 'total : %d GB\n', $sum_size / 1024 / 1024 / 1024;
+printf "total : %.2f GB\n", $sum_size / 1024 / 1024 / 1024;
